@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Best Jokes</title>
+  </head>
+  <style type="text/css">
+    .container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+    .btn {
+      margin: 10px;
+      padding: 10px;
+      background-color: #6969e6;
+      border: none;
+      border-radius: 12px;
+      font-size: 20px;
+    }
+  </style>
+  <body>
+    <div class="container">
+      <h2>🤣 Best Jokes 👌</h2>
+      <div class="joke" id="joke">loading ...</div>
+      <div class="joke" id="jokes"></div>
+      <button id="joke_Btn" class="btn">Next</button>
+    </div>
+
+    <script type="text/javascript">
+      const jokes = document.querySelector("#joke");
+      const jok = document.querySelector("#jokes");
+      const jokeBtn = document.querySelector("#joke_Btn");
+
+      const getJokes = () => {
+        const setHeader = {
+          headers: {
+            Accept: "application/json",
+          },
+        };
+
+        //-------------------------------------Using Promise--------------------------------
+        fetch(
+          "https://official-joke-api.appspot.com/jokes/programming/ten",
+          setHeader
+        )
+          .then((res) => res.json())
+          .then(([data]) => {
+            console.log(data);
+            jokes.innerHTML = data.setup;
+            jok.innerHTML = data.punchline;
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      };
+
+      jokeBtn.addEventListener("click", getJokes);
+      getJokes();
+    </script>
+  </body>
+</html>
